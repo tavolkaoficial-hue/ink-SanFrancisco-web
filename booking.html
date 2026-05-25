@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>INK District | Luxury Booking Application</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Montserrat, sans-serif;
+}
+
+body{
+  background:#050505; 
+  color:white;
+  overflow-x:hidden;
+  min-height: 100vh;
+}
+
+/* ===================== */
+/* BACKGROUND GENERAL (IDÉNTICO) */
+/* ===================== */
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background-size:cover;
+  background-position:center;
+  background-image: url("https://images.unsplash.com/photo-1544717305-2782549b5136");
+  filter:brightness(0.12) saturate(1.2); 
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:radial-gradient(circle, rgba(0,0,0,0.2), rgba(0,0,0,0.98));
+}
+
+/* ===================== */
+/* HEADER */
+/* ===================== */
+
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:20px 50px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(15px);
+  z-index:1000;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.logo{
+  font-weight:900;
+  letter-spacing:2px;
+  text-decoration: none;
+  color: white;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.back-link {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.back-link:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #7c3aed;
+}
+
+/* BOTÓN SELECTOR DE IDIOMA PREMIUM */
+.lang-selector {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: 0.3s cubic-bezier(.2,.9,.2,1);
+}
+
+.lang-selector:hover {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  box-shadow: 0 0 15px rgba(124,58,237,0.4);
+}
+
+/* ===================== */
+/* CONTENEDOR DE RESERVA INTERACTIVO */
+/* ===================== */
+
+.booking-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  padding: 120px 20px 60px 20px;
+}
+
+/* CARDS ULTRA PRO (MISMO ESTILO DEL INDEX) */
+.booking-card {
+  background: rgba(17, 17, 17, 0.75);
+  border-radius: 25px;
+  width: 100%;
+  max-width: 650px;
+  padding: 50px 40px;
+  position: relative;
+  transform-style: preserve-3d;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.15s linear, box-shadow 0.3s ease;
+}
+
+.booking-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(124,58,237,0.12), transparent 60%);
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+}
+.booking-card:hover::after { opacity: 1; }
+
+.booking-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 25px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.6), transparent, rgba(0,224,255,0.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0);
+  opacity: 0;
+  transition: 0.4s;
+  pointer-events: none;
+}
+.booking-card:hover::before { opacity: 1; }
+
+/* STEPS / DIAPOSITIVAS */
+.booking-step {
+  display: none;
+}
+.booking-step.active {
+  display: block;
+  animation: stepFade 0.6s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes stepFade {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ELEMENTOS DE FORMULARIO PREMIUM */
+.booking-card h2 {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 20px rgba(124,58,237,0.3);
+}
+
+.booking-card p {
+  color: #aaa;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #00e0ff;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  background: rgba(5, 5, 5, 0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px 20px;
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 15px rgba(124,58,237,0.25);
+  background: rgba(10, 10, 10, 0.8);
+}
+
+/* OPCIONES EN REJILLA INTERACTIVA */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.option-tile {
+  background: rgba(5, 5, 5, 0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 20px 15px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s cubic-bezier(.2,.9,.2,1);
+}
+
+.option-tile input {
+  display: none;
+}
+
+.option-tile span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #aaa;
+  display: block;
+}
+
+.option-tile:hover {
+  border-color: rgba(124,58,237,0.5);
+  background: rgba(124,58,237,0.03);
+}
+
+.option-tile input:checked + span {
+  color: #fff;
+}
+
+.option-tile.selected {
+  border-color: #7c3aed;
+  background: rgba(124,58,237,0.12);
+  box-shadow: 0 0 20px rgba(124,58,237,0.2);
+}
+
+/* BOTONES (IDÉNTICOS) */
+.btn {
+  position: relative;
+  overflow: hidden;
+  padding: 15px 35px;
+  border: none;
+  background: #7c3aed;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #aaa;
+  margin-right: 15px;
+}
+
+.btn-secondary:hover {
+  color: white;
+  border-color: white;
+  background: rgba(255,255,255,0.02);
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+/* PROGRESS PILLS */
+.progress-pills {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 35px;
+}
+
+.pill {
+  width: 35px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  transition: 0.4s ease;
+}
+
+.pill.active {
+  background: #7c3aed;
+  box-shadow: 0 0 10px #7c3aed;
+}
+
+.pill.completed {
+  background: #00e0ff;
+}
+
+/* ===================== */
+/* SCROLL MAGIC EFFECTS */
+/* ===================== */
+
+.wave{
+  position:fixed;
+  width:200px;
+  height:200px;
+  border:2px solid rgba(124,58,237,0.2);
+  border-radius:50%;
+  pointer-events:none;
+  transform: translate(-50%, -50%);
+  animation:wave 1s ease-out forwards;
+}
+
+@keyframes wave{
+  from{ transform: translate(-50%, -50%) scale(0); opacity:1; }
+  to{ transform: translate(-50%, -50%) scale(4); opacity:0; }
+}
+
+.noise{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  opacity:0.05;
+  pointer-events:none;
+  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+#inkCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+}
+
+.scanner-line{
+  position:fixed;
+  top:-200px;
+  left:0;
+  width:100%;
+  height:200px;
+  background:linear-gradient(to bottom, transparent, rgba(124,58,237,0.1), transparent);
+  z-index:2;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+
+.ambient-light{
+  position:fixed;
+  width:700px;
+  height:700px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%);
+  filter:blur(100px);
+  pointer-events:none;
+  z-index:-1;
+  will-change: transform;
+}
+
+@media(max-width: 600px) {
+  header { padding: 20px; }
+  .booking-card { padding: 35px 20px; }
+  .options-grid { grid-template-columns: 1fr; }
+  .header-nav { gap: 12px; }
+}
+</style>
+</head>
+
+<body>
+<div class="noise"></div>
+<div class="bg"></div>
+<div class="overlay"></div>
+<canvas id="inkCanvas"></canvas>
+<div class="scanner-line"></div>
+<div class="ambient-light"></div>
+
+<header>
+  <a href="index.html" class="logo">INK DISTRICT</a>
+  <div class="header-nav">
+    <a href="index.html" class="back-link" data-es="← Volver al Estudio" data-en="← Return Studio">← Volver al Estudio</a>
+    <button class="lang-selector" id="langBtn" onclick="toggleLanguage()">EN</button>
+  </div>
+</header>
+
+<div class="booking-container">
+  <div class="booking-card" id="formCard">
+    
+    <!-- Barra de Progreso por Pasos -->
+    <div class="progress-pills">
+      <div class="pill active"></div>
+      <div class="pill"></div>
+      <div class="pill"></div>
+      <div class="pill"></div>
+    </div>
+
+    <form id="luxuryForm" onsubmit="handleFormSubmit(event)">
+      <!-- INTEGRACIÓN DE WEB3FORMS: LLAVE DE ACCESO INTEGRADA -->
+      <input type="hidden" name="access_key" value="87cd62c1-bb13-43cb-a6f0-0fa766c3acb7">
+      
+      <!-- PASO 1: Identificación Premium -->
+      <div class="booking-step active" id="step1">
+        <h2 data-es="Identidad del Coleccionista" data-en="Collector Identity">Identidad del Coleccionista</h2>
+        <p data-es="Por favor, proporciona tus datos de contacto para registrar tu perfil en nuestra base de datos privada." data-en="Please provide your contact framework to register your profile in our private database.">Por favor, proporciona tus datos de contacto para registrar tu perfil en nuestra base de datos privada.</p>
+        
+        <div class="form-group">
+          <label data-es="Nombre Completo" data-en="Full Name">Nombre Completo</label>
+          <input type="text" id="fullname" name="name" placeholder="e.g. Alexander Vance" required>
+        </div>
+        
+        <div class="form-group">
+          <label data-es="Correo Electrónico" data-en="Digital Mail">Correo Electrónico</label>
+          <input type="email" id="email" name="email" placeholder="e.g. alex@luxurycanvas.com" required>
+        </div>
+        
+        <div class="button-wrapper">
+          <button type="button" class="btn" onclick="nextStep(1)" data-es="Continuar Viaje" data-en="Continue Journey">Continuar Viaje</button>
+        </div>
+      </div>
+
+      <!-- PASO 2: Selección de Artista -->
+      <div class="booking-step" id="step2">
+        <h2 data-es="Selección del Maestro" data-en="Master Selection">Selección del Maestro</h2>
+        <p data-es="Selecciona al artista residente de élite cuya geometría estilística se alinee a la perfección con la visión arquitectónica de tu proyecto." data-en="Select the elite resident artist whose stylistic geometry aligns seamlessly with your project architectural vision.">Selecciona al artista residente de élite cuya geometría estilística se alinee a la perfección con la visión arquitectónica de tu proyecto.</p>
+        
+        <div class="form-group">
+          <label data-es="Especialista Residente" data-en="Resident Specialist">Especialista Residente</label>
+          <div class="options-grid">
+            <label class="option-tile">
+              <input type="radio" name="artist" value="Mia Rose" checked onclick="selectTile(this)">
+              <span>Mia Rose<br><small style="color: #666;" data-es="Línea Fina" data-en="Fine Line">Línea Fina</small></span>
+            </label>
+            <label class="option-tile">
+              <input type="radio" name="artist" value="Victor Noir" onclick="selectTile(this)">
+              <span>Victor Noir<br><small style="color: #666;" data-es="Cyber Tribal" data-en="Cyber Tribal">Cyber Tribal</small></span>
+            </label>
+            <label class="option-tile">
+              <input type="radio" name="artist" value="Luna Ink" onclick="selectTile(this)">
+              <span>Luna Ink<br><small style="color: #666;" data-es="Blackwork" data-en="Blackwork">Blackwork</small></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="button-wrapper">
+          <button type="button" class="btn btn-secondary" onclick="prevStep(2)" data-es="Atrás" data-en="Back">Atrás</button>
+          <button type="button" class="btn" onclick="nextStep(2)" data-es="Siguiente Paso" data-en="Next Step">Siguiente Paso</button>
+        </div>
+      </div>
+
+      <!-- PASO 3: Concepto y Anatomía -->
+      <div class="booking-step" id="step3">
+        <h2 data-es="Arquitectura del Lienzo" data-en="Canvas Architecture">Arquitectura del Lienzo</h2>
+        <p data-es="Describe el concepto de distribución estructural, el posicionamiento anatómico y las limitaciones aproximadas de escala." data-en="Describe your structural layout concept, anatomical positioning, and approximate scale constraints.">Describe el concepto de distribución estructural, el posicionamiento anatómico y las limitaciones aproximadas de escala.</p>
+        
+        <div class="form-group">
+          <label data-es="Ubicación Corporal y Dimensiones" data-en="Body Placement & Dimensions">Ubicación Corporal y Dimensiones</label>
+          <input type="text" id="placement" name="placement" placeholder="e.g. Left Forearm, approx 15x10cm" required>
+        </div>
+
+        <div class="form-group">
+          <label data-es="Concepto Central del Diseño" data-en="Design Core Concept">Concepto Central del Diseño</label>
+          <textarea id="concept" name="concept" rows="4" placeholder="..." required></textarea>
+        </div>
+        
+        <div class="button-wrapper">
+          <button type="button" class="btn btn-secondary" onclick="prevStep(3)" data-es="Atrás" data-en="Back">Atrás</button>
+          <button type="button" class="btn" onclick="nextStep(3)" data-es="Siguiente Paso" data-en="Next Step">Siguiente Paso</button>
+        </div>
+      </div>
+
+      <!-- PASO 4: Presupuesto y Envío -->
+      <div class="booking-step" id="step4">
+        <h2 data-es="Rango de Inversión" data-en="Investment Range">Rango de Inversión</h2>
+        <p data-es="Define el marco financiero proyectado asignado para el nivel de ejecución de este proyecto." data-en="Define your projected financial framework allocated for this project execution tier.">Define el marco financiero proyectado asignado para el nivel de ejecución de este proyecto.</p>
+        
+        <div class="form-group">
+          <label data-es="Presupuesto Estimado Asignado" data-en="Estimated Budget Allocation">Presupuesto Estimado Asignado</label>
+          <div class="options-grid">
+            <label class="option-tile">
+              <input type="radio" name="budget" value="$150 - $400" checked onclick="selectTile(this)">
+              <span>$150 - $400<br><small style="color: #666;" data-es="Mínimo / Medio" data-en="Minimal / Medium">Mínimo / Medio</small></span>
+            </label>
+            <label class="option-tile">
+              <input type="radio" name="budget" value="$400 - $800" onclick="selectTile(this)">
+              <span>$400 - $800<br><small style="color: #666;" data-es="Pieza Detallada" data-en="Detailed Piece">Pieza Detallada</small></span>
+            </label>
+            <label class="option-tile">
+              <input type="radio" name="budget" value="$800+" onclick="selectTile(this)">
+              <span>$800+<br><small style="color: #666;" data-es="Lienzo a Gran Escala" data-en="Full Scale Canvas">Lienzo a Gran Escala</small></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="button-wrapper">
+          <button type="button" class="btn btn-secondary" onclick="prevStep(4)" data-es="Atrás" data-en="Back">Atrás</button>
+          <button type="submit" class="btn" style="box-shadow: 0 0 20px rgba(0, 224, 255, 0.3); background: linear-gradient(90deg, #7c3aed, #00e0ff);" data-es="Enviar Solicitud" data-en="Submit Application">Enviar Solicitud</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+/* ========================================================== */
+/* MOTOR MULTIIDIOMA GLOBAL CON LOCALSTORAGE */
+/* ========================================================== */
+let currentLang = localStorage.getItem('selectedLang') || 'es';
+
+// Placeholders dinámicos para los campos de texto
+const placeholders = {
+  es: {
+    fullname: "ej. Alexander Vance",
+    placement: "ej. Antebrazo izquierdo, aprox 15x10cm",
+    concept: "Describe tus ideas abstractas, el flujo geométrico o los requisitos narrativos visuales..."
+  },
+  en: {
+    fullname: "e.g. Alexander Vance",
+    placement: "e.g. Left Forearm, approx 15x10cm",
+    concept: "Describe your abstract ideas, geometry flow, or visual storytelling requirements..."
+  }
+};
+
+const alerts = {
+  es: {
+    step1: "Por favor, completa tus coordenadas de identidad.",
+    step3: "Por favor, describe las especificaciones de tu proyecto.",
+    error: "Hubo un error al transmitir la solicitud. Intenta nuevamente."
+  },
+  en: {
+    step1: "Please populate your identity coordinates.",
+    step3: "Please outline your project specifications.",
+    error: "An error occurred while transmitting the request. Please try again."
+  }
+};
+
+function applyLanguage() {
+  // Guardar estado actual
+  localStorage.setItem('selectedLang', currentLang);
+  
+  // Cambiar texto de etiqueta del botón (Muestra el idioma opuesto listo para hacer click)
+  document.getElementById("langBtn").innerText = currentLang === 'es' ? 'EN' : 'ES';
+  
+  // Traducir todos los elementos marcados con data-attributes
+  document.querySelectorAll('[data-es]').forEach(el => {
+    el.innerText = el.getAttribute(`data-${currentLang}`);
+  });
+
+  // Traducir Placeholders
+  const nameInput = document.getElementById('fullname');
+  const placementInput = document.getElementById('placement');
+  const conceptInput = document.getElementById('concept');
+
+  if (nameInput) nameInput.placeholder = placeholders[currentLang].fullname;
+  if (placementInput) placementInput.placeholder = placeholders[currentLang].placement;
+  if (conceptInput) conceptInput.placeholder = placeholders[currentLang].concept;
+}
+
+function toggleLanguage() {
+  currentLang = currentLang === 'es' ? 'en' : 'es';
+  applyLanguage();
+}
+
+/* ========================================================== */
+/* MOTOR LOGIC DE FORMULARIO INTERACTIVO */
+/* ========================================================== */
+
+function updateProgress(step) {
+  const pills = document.querySelectorAll('.pill');
+  pills.forEach((pill, idx) => {
+    if (idx < step - 1) {
+      pill.className = 'pill completed';
+    } else if (idx === step - 1) {
+      pill.className = 'pill active';
+    } else {
+      pill.className = 'pill';
+    }
+  });
+}
+
+function nextStep(currentStep) {
+  if (currentStep === 1) {
+    if (!document.getElementById('fullname').value || !document.getElementById('email').value) {
+      alert(alerts[currentLang].step1);
+      return;
+    }
+  }
+  if (currentStep === 3) {
+    if (!document.getElementById('placement').value || !document.getElementById('concept').value) {
+      alert(alerts[currentLang].step3);
+      return;
+    }
+  }
+
+  document.getElementById(`step${currentStep}`).classList.remove('active');
+  document.getElementById(`step${currentStep + 1}`).classList.add('active');
+  updateProgress(currentStep + 1);
+}
+
+function prevStep(currentStep) {
+  document.getElementById(`step${currentStep}`).classList.remove('active');
+  document.getElementById(`step${currentStep - 1}`).classList.add('active');
+  updateProgress(currentStep - 1);
+}
+
+function selectTile(input) {
+  const tiles = input.closest('.options-grid').querySelectorAll('.option-tile');
+  tiles.forEach(tile => tile.classList.remove('selected'));
+  input.closest('.option-tile').classList.add('selected');
+}
+
+document.querySelectorAll('.option-tile input:checked').forEach(input => {
+  input.closest('.option-tile').classList.add('selected');
+});
+
+/* ENVÍO FINAL DE LA CONSULTA PREMIUM MULTIIDIOMA ENLAZADO CON WEB3FORMS */
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const formData = new FormData(form);
+  
+  // Captura de datos esenciales para renderizar la pantalla final
+  const name = document.getElementById('fullname').value;
+  const artist = document.querySelector('input[name="artist"]:checked').value;
+  const budget = document.querySelector('input[name="budget"]:checked').value;
+  const card = document.getElementById('formCard');
+
+  // Cambiamos levemente el texto del botón de envío para dar feedback visual premium
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn.innerText;
+  submitBtn.innerText = currentLang === 'es' ? 'Transmitiendo...' : 'Transmitting...';
+  submitBtn.disabled = true;
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    if (response.ok) {
+      if (currentLang === 'es') {
+        card.innerHTML = `
+          <div style="text-align: center; animation: stepFade 0.8s ease forwards; padding: 40px 10px;">
+            <span style="font-size: 60px; text-shadow: 0 0 30px #00e0ff; display:block; margin-bottom:20px;">✦</span>
+            <h2 style="color: #00e0ff; font-size:36px;">Solicitud Recibida</h2>
+            <p style="margin:20px auto 30px auto; max-width:450px; color:#aaa;">
+              Gracias, <strong>${name}</strong>. Tu propuesta arquitectónica para <strong>${artist}</strong> con un presupuesto estimado de <strong>${budget}</strong> ha sido registrada en nuestros servidores seguros de lujo.
+            </p>
+            <p style="color: #666; font-size: 13px;">Mesa de curaduría se pondrá en contacto contigo vía correo digital dentro de las próximas 48 horas hábiles.</p>
+            <a href="index.html"><button class="btn" style="margin-top: 30px;">Volver a la Galería Principal</button></a>
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <div style="text-align: center; animation: stepFade 0.8s ease forwards; padding: 40px 10px;">
+            <span style="font-size: 60px; text-shadow: 0 0 30px #00e0ff; display:block; margin-bottom:20px;">✦</span>
+            <h2 style="color: #00e0ff; font-size:36px;">Application Received</h2>
+            <p style="margin:20px auto 30px auto; max-width:450px; color:#aaa;">
+              Thank you, <strong>${name}</strong>. Your architectural proposal for <strong>${artist}</strong> with a budget framework of <strong>${budget}</strong> has been logged in our secure luxury servers.
+            </p>
+            <p style="color: #666; font-size: 13px;">Our curatorial desk will reach out via digital mail within 48 business hours.</p>
+            <a href="index.html"><button class="btn" style="margin-top: 30px;">Return to Main Gallery</button></a>
+          </div>
+        `;
+      }
+    } else {
+      alert(alerts[currentLang].error);
+      submitBtn.innerText = originalBtnText;
+      submitBtn.disabled = false;
+    }
+  } catch (error) {
+    alert(alerts[currentLang].error);
+    submitBtn.innerText = originalBtnText;
+    submitBtn.disabled = false;
+  }
+}
+
+/* ========================================================== */
+/* EFECTOS DINÁMICOS MOUSE CARDS 3D */
+/* ========================================================== */
+const card = document.getElementById("formCard");
+const ambient = document.querySelector(".ambient-light");
+const scanner = document.querySelector(".scanner-line");
+
+card.addEventListener("mousemove", (e) => {
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const pctX = (x / rect.width) * 100;
+  const pctY = (y / rect.height) * 100;
+  card.style.setProperty('--x', pctX + '%');
+  card.style.setProperty('--y', pctY + '%');
+
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const rotateX = (y - centerY) / 25; 
+  const rotateY = (centerX - x) / 25;
+
+  card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+});
+
+card.addEventListener("mouseleave", () => {
+  card.style.transform = "";
+});
+
+document.body.addEventListener("mousemove", (e) => {
+  ambient.style.transform = `translate(${e.clientX - 350}px, ${e.clientY - 350}px)`;
+});
+
+let scrollTopMock = 0;
+window.addEventListener('scroll', () => {
+  scrollTopMock = window.scrollY;
+});
+setInterval(() => {
+  scrollTopMock += 2;
+  scanner.style.top = (scrollTopMock % window.innerHeight) + "px";
+}, 30);
+
+document.addEventListener('click', (e) => {
+  const wave = document.createElement("div");
+  wave.className = "wave";
+  wave.style.left = e.clientX + "px";
+  wave.style.top = e.clientY + "px";
+  document.body.appendChild(wave);
+  setTimeout(() => wave.remove(), 1000);
+});
+
+/* ========================================================== */
+/* CANVAS LÍQUIDO DE PARTÍCULAS DE TINTA */
+/* ========================================================== */
+const canvas = document.getElementById("inkCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const particles = [];
+
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 4 + 1;
+    this.speedX = Math.random() * 1.2 - 0.6;
+    this.speedY = Math.random() * 1.2 - 0.6;
+    this.opacity = 0.7;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.opacity -= 0.01;
+  }
+  draw() {
+    ctx.fillStyle = `rgba(124,58,237,${this.opacity})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].opacity <= 0) {
+      particles.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+document.addEventListener("mousemove", (e) => {
+  if(Math.random() > 0.6) {
+    particles.push(new Particle(e.clientX, e.clientY));
+  }
+});
+
+// Inicializar el idioma al cargar la página leyendo la variable global
+window.addEventListener("load", () => {
+  applyLanguage();
+});
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>INK District | Premium Studio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Montserrat, sans-serif;
+}
+
+body{
+  background:#050505; 
+  color:white;
+  overflow-x:hidden;
+}
+
+/* ===================== */
+/* BACKGROUND GENERAL */
+/* ===================== */
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background-size:cover;
+  background-position:center;
+  filter:brightness(0.15) saturate(1.2); 
+  transition: background-image 1s ease, transform 0.1s linear;
+  will-change: background-image, transform;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:radial-gradient(circle, rgba(0,0,0,0.2), rgba(0,0,0,0.98));
+}
+
+/* ===================== */
+/* HEADER */
+/* ===================== */
+
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:20px 50px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(15px);
+  z-index:1000;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.logo{
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+nav{
+  display: flex;
+  align-items: center;
+}
+
+nav a{
+  color:#aaa;
+  margin-left:25px;
+  text-decoration:none;
+  font-size: 14px;
+  font-weight: 500;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:#fff;
+}
+
+/* BOTÓN SELECTOR DE IDIOMA PREMIUM */
+.lang-selector {
+  margin-left: 35px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: 0.3s cubic-bezier(.2,.9,.2,1);
+}
+
+.lang-selector:hover {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  box-shadow: 0 0 15px rgba(124,58,237,0.4);
+}
+
+/* ===================== */
+/* HERO */
+/* ===================== */
+
+.hero{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:80px;
+  font-weight:900;
+  letter-spacing: -1px;
+}
+
+.hero p{
+  color:#aaa;
+  margin-top:15px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.btn{
+  position: relative;
+  overflow: hidden;
+  margin-top:30px;
+  padding:15px 40px;
+  border:none;
+  background:#7c3aed;
+  color:white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius:30px;
+  cursor:pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 30px rgba(124,58,237,0.6);
+}
+
+/* ===================== */
+/* SECTIONS */
+/* ===================== */
+
+section{
+  padding:140px 10%;
+  position:relative;
+  transform-style:preserve-3d;
+}
+
+section::before{
+  content:"";
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:#7c3aed;
+  filter:blur(180px);
+  opacity:0.04;
+  z-index:-1;
+  pointer-events: none;
+}
+
+.section-title {
+  font-size: 45px;
+  font-weight: 900;
+  margin-bottom: 60px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ===================== */
+/* REVEAL ON SCROLL */
+/* ===================== */
+
+.reveal{
+  opacity:0;
+  transform:translateY(60px) scale(0.97);
+  transition:1s cubic-bezier(.2,.9,.2,1);
+}
+
+.reveal.active{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+/* ===================== */
+/* GRID GENERALES */
+/* ===================== */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:35px;
+}
+
+/* ===================== */
+/* CARD (ULTRA PRO) */
+/* ===================== */
+
+.card{
+  background:rgba(17, 17, 17, 0.7);
+  border-radius:25px;
+  overflow:hidden;
+  position:relative;
+  transform-style:preserve-3d;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.05);
+  will-change: transform, box-shadow;
+  transition: transform 0.15s linear, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.card img{
+  width:100%;
+  height:280px;
+  object-fit:cover;
+  filter:saturate(1.1) contrast(1.1);
+  transition: transform 0.5s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+.card-content{
+  padding:25px;
+}
+
+.card-content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.card-content p {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(124,58,237,0.15), transparent 60%);
+  opacity:0;
+  transition:0.3s;
+  pointer-events: none;
+}
+
+.card:hover::after{
+  opacity:1;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 25px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.6), transparent, rgba(0,224,255,0.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0);
+  opacity: 0;
+  transition: 0.4s;
+  pointer-events: none;
+}
+
+.card:hover::before{
+  opacity:1;
+}
+
+/* ===================== */
+/* SECCIÓN: ESPECIALIDADES */
+/* ===================== */
+.style-card {
+  text-align: center;
+  padding: 40px 30px;
+}
+.style-card .style-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+  display: inline-block;
+  text-shadow: 0 0 20px rgba(124,58,237,0.6);
+}
+
+/* ===================== */
+/* SECCIÓN: RESERVAS TIMELINE */
+/* ===================== */
+.timeline {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(to bottom, #7c3aed, rgba(0,224,255,0.5), transparent);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.timeline-item {
+  padding: 20px 40px;
+  position: relative;
+  width: 50%;
+  clear: both;
+}
+.timeline-item.left { left: 0; text-align: right; }
+.timeline-item.right { left: 50%; text-align: left; }
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #050505;
+  border: 3px solid #7c3aed;
+  top: 26px;
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 0 15px #7c3aed;
+}
+.timeline-item.left::after { right: -8px; }
+.timeline-item.right::after { left: -8px; }
+
+.timeline-content {
+  background: rgba(17, 17, 17, 0.6);
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+}
+.timeline-content h3 {
+  color: #00e0ff;
+  margin-bottom: 10px;
+}
+
+/* ===================== */
+/* SECCIÓN: BIOSEGURIDAD */
+/* ===================== */
+.safety-card {
+  background: linear-gradient(145deg, rgba(20,20,20,0.8), rgba(10,10,10,0.8));
+  padding: 40px;
+  border-radius: 25px;
+  border-left: 4px solid #7c3aed;
+}
+.safety-card h3 { margin-bottom: 15px; font-size: 20px;}
+.safety-card p { color: #aaa; font-size: 14px; line-height: 1.6; }
+
+/* ===================== */
+/* SECCIÓN: FAQ (ACORDEÓN) */
+/* ===================== */
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.faq-item {
+  background: rgba(17, 17, 17, 0.7);
+  border-radius: 15px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(255,255,255,0.04);
+  overflow: hidden;
+}
+.faq-question {
+  padding: 22px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.3s;
+}
+.faq-question:hover {
+  background: rgba(124,58,237,0.05);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 30px;
+  color: #aaa;
+  font-size: 15px;
+  line-height: 1.7;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.faq-item.active .faq-answer {
+  max-height: 200px;
+  padding-bottom: 25px;
+}
+.faq-icon {
+  transition: transform 0.3s;
+  color: #7c3aed;
+}
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ===================== */
+/* SCROLL MAGIC EFFECTS */
+/* ===================== */
+
+.wave{
+  position:fixed;
+  width:200px;
+  height:200px;
+  border:2px solid rgba(124,58,237,0.2);
+  border-radius:50%;
+  pointer-events:none;
+  transform: translate(-50%, -50%);
+  animation:wave 1s ease-out forwards;
+}
+
+@keyframes wave{
+  from{ transform: translate(-50%, -50%) scale(0); opacity:1; }
+  to{ transform: translate(-50%, -50%) scale(4); opacity:0; }
+}
+
+.scroll-line{
+  position:fixed;
+  top:0;
+  left:0;
+  width:0%;
+  height:4px;
+  background:linear-gradient(90deg,#7c3aed,#00e0ff,#7c3aed);
+  z-index:99999;
+  box-shadow:0 0 20px #7c3aed;
+}
+
+.noise{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  opacity:0.05;
+  pointer-events:none;
+  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+.hero-content{
+  transition:transform 0.1s linear;
+  will-change:transform;
+}
+
+h1,h2,h3{
+  text-shadow:0 0 25px rgba(124,58,237,0.25);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+.float-icon{
+  position:fixed;
+  font-size:24px;
+  color:rgba(255,255,255,0.04);
+  animation:floatIcons linear infinite;
+  pointer-events:none;
+  z-index:-1;
+}
+
+@keyframes floatIcons{
+  from{ transform:translateY(120vh) rotate(0deg); }
+  to{ transform:translateY(-120vh) rotate(360deg); }
+}
+
+/* ================================= */
+/* TATTOO SCROLL GALLERY */
+/* ================================= */
+
+.tattoo-section{
+  height:650vh; 
+  position:relative;
+}
+
+.tattoo-sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:80px;
+  overflow:hidden;
+}
+
+.tattoo-image-wrap{
+  position:relative;
+  width:460px;
+  height:600px;
+}
+
+.tattoo-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:30px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(124,58,237,0.2);
+  will-change:transform, opacity, filter;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; 
+}
+
+.tattoo-img.active-work {
+  opacity: 1;
+}
+
+.tattoo-text{
+  max-width:500px;
+}
+
+.tattoo-text h2{
+  font-size:60px;
+  margin-bottom:20px;
+}
+
+.tattoo-text p{
+  color:#aaa;
+  font-size:18px;
+  line-height:1.8;
+}
+
+.tattoo-smoke{
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 70%);
+  opacity:0;
+  mix-blend-mode:screen;
+  filter:blur(50px);
+  pointer-events:none;
+  z-index:10;
+}
+
+.dissolve-particle{
+  position:fixed;
+  width:8px;
+  height:8px;
+  background:#7c3aed;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  filter:blur(1px);
+}
+
+#inkCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+}
+
+.scanner-line{
+  position:fixed;
+  top:-200px;
+  left:0;
+  width:100%;
+  height:200px;
+  background:linear-gradient(to bottom, transparent, rgba(124,58,237,0.1), transparent);
+  z-index:2;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+
+.ambient-light{
+  position:fixed;
+  width:700px;
+  height:700px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%);
+  filter:blur(100px);
+  pointer-events:none;
+  z-index:-1;
+  will-change: transform;
+}
+
+/* Responsive básico para la línea de tiempo */
+@media(max-width: 768px) {
+  .timeline::after { left: 31px; }
+  .timeline-item { width: 100%; text-align: left !important; padding-left: 70px; padding-right: 20px; }
+  .timeline-item.right { left: 0; }
+  .timeline-item::after { left: 22px !important; }
+  .tattoo-sticky { flex-direction: column; gap: 30px; justify-content: center; }
+  .tattoo-image-wrap { width: 280px; height: 380px; }
+  .hero h1 { font-size: 45px; }
+  header { padding: 20px; }
+  nav a { margin-left: 12px; font-size: 11px; }
+  .lang-selector { margin-left: 15px; padding: 4px 8px; font-size: 10px; }
+}
+
+.nike-scroll-section {
+  position: relative;
+  height: 300vh;
+  background: #030303;
+  overflow: visible;
+}
+
+.sticky-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.05), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.03), transparent 405);
+}
+
+.background-text {
+  position: absolute;
+  font-size: 18vw;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.01);
+  text-shadow: 0 0 40px rgba(245, 158, 11, 0.005);
+  letter-spacing: -6px;
+  user-select: none;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.machine-container-center {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.perspective-box {
+  perspective: 2500px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.machine-wrapper {
+  position: relative;
+  width: 320px;
+  height: 560px;
+  transform-style: preserve-3d;
+  transform: rotateX(15deg) rotateY(-20deg) rotateZ(-3deg);
+  will-change: transform;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+  transition: transform 0.04s linear, opacity 0.15s ease;
+}
+
+@media (max-width: 768px) {
+  .machine-wrapper {
+    transform: rotateX(12deg) rotateY(-12deg) scale(0.75);
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="scroll-line" id="scrollLine"></div>
+<div class="noise"></div>
+
+<div class="float-icon" style="left:10%; animation-duration:14s;">✦</div>
+<div class="float-icon" style="left:25%; animation-duration:20s;">🖋</div>
+<div class="float-icon" style="left:70%; animation-duration:16s;">✦</div>
+<div class="float-icon" style="left:85%; animation-duration:22s;">🖤</div>
+
+<div class="bg" id="bg"></div>
+<div class="overlay"></div>
+<canvas id="inkCanvas"></canvas>
+<div class="scanner-line"></div>
+<div class="ambient-light"></div>
+
+<header>
+  <div class="logo">INK DISTRICT</div>
+  <nav>
+    <a href="#styles" data-es="Estilos" data-en="Styles">Estilos</a>
+    <a href="#portfolio" data-es="Galería" data-en="Portfolio">Galería</a>
+    <a href="#artists" data-es="Artistas" data-en="Artists">Artistas</a>
+    <a href="#booking" data-es="Proceso" data-en="Process">Proceso</a>
+    <a href="#safety" data-es="Seguridad" data-en="Safety">Seguridad</a>
+    <a href="#faq" data-es="FAQ" data-en="FAQ">FAQ</a>
+    
+    <button class="lang-selector" id="langBtn" onclick="toggleLanguage()">EN</button>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-content" id="heroContent">
+    <h1 data-es="Estudio de Tatuajes de Lujo" data-en="Luxury Tattoo Studio">Estudio de Tatuajes</h1>
+    <p data-es="Mínimo • Oscuro • Experiencia de Tinta Premium" data-en="Minimal • Dark • Premium Ink Experience">Mínimo • Oscuro • Experiencia de Tinta Premium</p>
+    <a href="#contact"><button class="btn" data-es="Reservar Sesión" data-en="Book Session">Reservar Sesión</button></a>
+  </div>
+</div>
+
+
+
+
+<section id="styles">
+  <h2 class="section-title reveal" data-es="Nuestras Especialidades" data-en="Our Specialties">Nuestras Especialidades</h2>
+  <div class="grid">
+    <div class="card style-card reveal">
+      <span class="style-icon">🖋</span>
+      <h3 data-es="Línea Fina" data-en="Fine Line">Línea Fina</h3>
+      <p data-es="Arte elegante de una sola aguja, ultra preciso para conceptos estructurales y botánicos." data-en="Ultra-precise, elegant single-needle artwork for structural and botanical concepts.">Arte elegante de una sola aguja, ultra preciso para conceptos estructurales y botánicos.</p>
+    </div>
+    <div class="card style-card reveal">
+      <span class="style-icon">👁️</span>
+      <h3 data-es="Microrealismo" data-en="Microrealism">Microrealismo</h3>
+      <p data-es="Retratos y elementos complejos en alta definición, escalados perfectamente a tu anatomía." data-en="High-definition intricate portraits and elements scaled perfectly to your anatomy.">Retratos y elementos complejos en alta definición, escalados perfectamente a tu anatomía.</p>
+    </div>
+    <div class="card style-card reveal">
+      <span class="style-icon">🖤</span>
+      <h3 data-es="Blackwork Oscuro" data-en="Dark Blackwork">Blackwork Oscuro</h3>
+      <p data-es="Tintas negras profundas y ricas, gradientes geométricos y texturas de contraste extremo." data-en="Deep rich black inks, geometric gradients, and extreme contrasting textures.">Tintas negras profundas y ricas, gradientes geométricos y texturas de contraste extremo.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="portfolio" class="tattoo-section">
+  <div class="tattoo-sticky">
+    <div class="tattoo-image-wrap" id="tattooWrapper">
+      <img class="tattoo-img active-work" src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?q=80&w=1974&auto=format&fit=crop">
+      <img class="tattoo-img" src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=1974&auto=format&fit=crop">
+      <img class="tattoo-img" src="https://images.unsplash.com/photo-1562962690-564bc7d66626?q=80&w=1974&auto=format&fit=crop">
+      <img class="tattoo-img" src="https://images.unsplash.com/photo-1550537687-c91072c4792d?q=80&w=1974&auto=format&fit=crop">
+      <img class="tattoo-img" src="https://images.unsplash.com/photo-1590247813693-5541d1c609fd?q=80&w=1974&auto=format&fit=crop">
+      <img class="tattoo-img" src="https://images.unsplash.com/photo-1605647540924-852290f6b0d5?q=80&w=1974&auto=format&fit=crop">
+      <div class="tattoo-smoke"></div>
+    </div>
+    <div class="tattoo-text">
+      <h2 data-es="Portafolio" data-en="Portfolio">Portafolio</h2>
+      <p id="tattooDescription" data-es="Cada tatuaje cuenta una historia. Desplaza hacia abajo y mira evolucionar nuestro arte." data-en="Every tattoo tells a story. Scroll down and watch our art portfolio evolve.">Cada tatuaje cuenta una historia. Desplaza hacia abajo y mira evolucionar nuestro arte.</p>
+    </div>
+  </div>
+</section>
+
+<section id="artists">
+  <h2 class="section-title reveal" data-es="Artistas Maestros" data-en="Master Artists">Artistas Maestros</h2>
+  <div class="grid">
+    <div class="card reveal">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330">
+      <div class="card-content">
+        <h3>Mia Rose</h3>
+        <p data-es="Especialista en Línea Fina" data-en="Fine Line Specialist">Especialista en Línea Fina</p>
+      </div>
+    </div>
+    <div class="card reveal">
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
+      <div class="card-content">
+        <h3>Victor Noir</h3>
+        <p data-es="Tinta Cyber Tribal" data-en="Cyber Tribal Ink">Tinta Cyber Tribal</p>
+      </div>
+    </div>
+    <div class="card reveal">
+      <img src="https://images.unsplash.com/photo-1544717305-2782549b5136">
+      <div class="card-content">
+        <h3>Luna Ink</h3>
+        <p data-es="Maestra del Blackwork" data-en="Blackwork Master">Maestra del Blackwork</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="booking">
+  <h2 class="section-title reveal" data-es="El Viaje Premium" data-en="The Premium Journey">El Viaje Premium</h2>
+  <div class="timeline">
+    <div class="timeline-item left reveal">
+      <div class="timeline-content">
+        <h3 data-es="1. Envío del Proyecto" data-en="1. Project Submission">1. Envío del Proyecto</h3>
+        <p data-es="Comparte tus ideas centrales, preferencia de tamaño y obras de referencia mediante nuestro formulario de solicitud de lujo." data-en="Share your core ideas, sizing preference, and reference artwork through our luxury application form.">Comparte tus ideas centrales, preferencia de tamaño y obras de referencia mediante nuestro formulario de solicitud de lujo.</p>
+      </div>
+    </div>
+    <div class="timeline-item right reveal">
+      <div class="timeline-content">
+        <h3 data-es="2. Consulta de Diseño" data-en="2. Design Consultation">2. Consulta de Diseño</h3>
+        <p data-es="Reúnete directamente con el especialista elegido para analizar el flujo en la piel y dar vida a un lienzo conceptual a medida." data-en="Meet directly with your selected master artist to analyze skin layout, flow, and create a bespoke concept canvas.">Reúnete directamente con el especialista elegido para analizar el flujo en la piel y dar vida a un lienzo conceptual a medida.</p>
+      </div>
+    </div>
+    <div class="timeline-item left reveal">
+      <div class="timeline-content">
+        <h3 data-es="3. La Sesión de Tinta" data-en="3. The Ink Session">3. La Sesión de Tinta</h3>
+        <p data-es="Relájate en nuestras cabinas privadas ultra estériles mientras tu concepto se convierte permanentemente en parte de tu galería personal." data-en="Relax inside our ultra-clean private booths while your concept permanently becomes part of your personal gallery.">Relájate en nuestras cabinas privadas ultra estériles mientras tu concepto se convierte permanentemente en parte de tu galería personal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="safety">
+  <h2 class="section-title reveal" data-es="Estándares de Seguridad" data-en="Safety Standards">Estándares de Seguridad</h2>
+  <div class="grid">
+    <div class="safety-card reveal">
+      <h3 data-es="Esterilización Médica" data-en="Medical Sterilization">Esterilización Médica</h3>
+      <p data-es="Cartuchos desechables premium 100% de un solo uso, abiertos estrictamente frente a tus ojos. Cero compromisos." data-en="100% single-use premium disposable cartridges opened strictly right in front of your eyes. Zero compromises.">Cartuchos desechables premium 100% de un solo uso, abiertos estrictamente frente a tus ojos. Cero compromisos.</p>
+    </div>
+    <div class="safety-card reveal">
+      <h3 data-es="Tinta Orgánica Certificada" data-en="Certified Organic Ink">Tinta Orgánica Certificada</h3>
+      <p data-es="Trabajamos exclusivamente con tintas veganas de élite libres de metales pesados, que garantizan un brillo de curación magnífico." data-en="We work exclusively with elite vegan, heavy-metal-free raw inks that guarantee magnificent healing brilliance.">Trabajamos exclusivamente con tintas veganas de élite libres de metales pesados, que garantizan un brillo de curación magnífico.</p>
+    </div>
+    <div class="safety-card reveal">
+      <h3 data-es="Cuidado Posterior de Lujo" data-en="Luxury Aftercare">Cuidado Posterior de Lujo</h3>
+      <p data-es="Cada obra de arte incluye un kit de recuperación personalizado de alta gama para proteger el diseño crudo en su fase inicial vital." data-en="Every single masterpiece includes a custom high-end recovery kit to protect the raw design over its vital initial phase.">Cada obra de arte incluye un kit de recuperación personalizado de alta gama para proteger el diseño crudo en su fase inicial vital.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="reveal" style="text-align: center; margin-bottom: 80px;">
+  <h2 data-es="Comienza Tu Historia" data-en="Begin Your Story">Comienza Tu Historia</h2>
+  <p style="color: #aaa; margin: 20px auto; max-width: 500px;" data-es="Conéctate con nuestros curadores y reserva una sesión de élite adaptada a la arquitectura de tu próximo lienzo." data-en="Connect with our collectors and book an elite session tailored to your next canvas architecture.">Conéctate con nuestros curadores y reserva una sesión de élite adaptada a la arquitectura de tu próximo lienzo.</p>
+  <a href="booking.html" style="text-decoration: none;">
+    <button class="btn" data-es="Aplicar Para Reserva" data-en="Apply For Booking">Aplicar Para Reserva</button>
+  </a>
+</section>
+
+<section id="faq">
+  <h2 class="section-title reveal" data-es="Preguntas Frecuentes" data-en="Frequently Asked Questions">Preguntas Frecuentes</h2>
+  <div class="faq-container reveal">
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-es="¿Cuánto cuesta una pieza personalizada de lujo?" data-en="How much does a luxury custom piece cost?">¿Cuánto cuesta una pieza personalizada de lujo?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer" data-es="Nuestros precios dependen profundamente de la complejidad del proyecto, el tamaño y el especialista elegido. La tarifa mínima del estudio es de $150. Las cotizaciones exactas se entregan durante consultas privadas digitales o físicas." data-en="Our prices depend deeply on the project's complexity, size, and chosen specialist. The minimum studio fee is $150. Exact quotes are rendered during private digital or physical consultations.">
+        Nuestros precios dependen profundamente de la complejidad del proyecto, el tamaño y el especialista elegido. La tarifa mínima del estudio es de $150. Las cotizaciones exactas se entregan durante consultas privadas digitales o físicas.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-es="¿Cuánto tiempo dura la lista de espera para una cita?" data-en="How long is the waiting list for an appointment?">¿Cuánto tiempo dura la lista de espera para una cita?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer" data-es="Dependiendo del artista, los períodos de espera fluctúan entre 2 y 6 semanas. Priorizamos conceptos personalizados originales que se ajusten a nuestras especializaciones de línea fina y blackwork oscuro." data-en="Depending on the artist, waiting periods fluctuate between 2 to 6 weeks. We prioritize original custom concepts that fit our structural fine-line and dark blackwork specializations.">
+        Dependiendo del artista, los períodos de espera fluctúan entre 2 y 6 semanas. Priorizamos conceptos personalizados originales que se ajusten a nuestras especializaciones de línea fina y blackwork oscuro.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">
+        <span data-es="¿Aceptan clientes sin cita previa o solo reservas?" data-en="Do you accept walk-ins or only bookings?">¿Aceptan clientes sin cita previa o solo reservas?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer" data-es="Trabajamos estrictamente con invitación y reservas estructuradas para preservar un entorno exclusivo, tranquilo e hiperestéril para cada proceso dedicado." data-en="We run strictly by invitation and structured bookings to preserve an exclusive, quiet, and hyper-sterile environment for each dedicated luxury canvas process.">
+        Trabajamos estrictamente con invitación y reservas estructuradas para preservar un entorno exclusivo, tranquilo e hiperestéril para cada proceso dedicado.
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ELEMENTOS DEL DOM */
+const bg = document.getElementById("bg");
+const reveals = document.querySelectorAll('.reveal');
+const cards = document.querySelectorAll(".card");
+const heroContent = document.getElementById("heroContent");
+const scrollLine = document.getElementById("scrollLine");
+const tattooSection = document.querySelector(".tattoo-section");
+const tattooWrapper = document.getElementById("tattooWrapper");
+const tattooImages = document.querySelectorAll(".tattoo-img");
+const tattooDescription = document.getElementById("tattooDescription");
+const smoke = document.querySelector(".tattoo-smoke");
+const scanner = document.querySelector(".scanner-line");
+const ambient = document.querySelector(".ambient-light");
+
+/* ESTRUCTURA MULTIIDIOMA DINÁMICA */
+let currentLang = 'es'; // Idioma por defecto
+
+const portfolioTexts = {
+  es: [
+    "Cada tatuaje cuenta una historia. Desplaza hacia abajo y mira evolucionar nuestro arte.",
+    "Dominando la Geometría y el Flujo. Conceptos a medida para la anatomía humana.",
+    "La etapa final. Puro contraste desapareciendo en un humo oscuro.",
+    "Enfoque de hiperrealismo. Creando piezas detalladas que se adaptan a tu estilo.",
+    "Masterclass de blackwork avanzado. Texturas de alta saturación.",
+    "La creación final. Concepto de cuidado posterior orgánico premium."
+  ],
+  en: [
+    "Every tattoo tells a story. Scroll down and watch our art portfolio evolve.",
+    "Mastering Geometry & Flow. Tailored concepts for human anatomy.",
+    "The final stage. Pure contrast disappearing into dark smoke.",
+    "Hyper-realism approach. Creating detailed pieces that fit your style.",
+    "Advanced blackwork masterclass. High saturation textures.",
+    "The final creation. Premium organic aftercare concept."
+  ]
+};
+
+
+
+/* URLS DE IMÁGENES DE FONDO DE PANTALLA */
+const bgImages = [
+  "https://images.unsplash.com/photo-1544717305-2782549b5136",
+  "https://images.unsplash.com/photo-1517841905240-472988babdf9",
+  "https://images.unsplash.com/photo-1544717305-2782549b5136",
+  "https://images.unsplash.com/photo-1544717305-2782549b5136",
+  "https://images.unsplash.com/photo-1544717305-2782549b5136",
+  "https://images.unsplash.com/photo-1544717305-2782549b5136",
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+];
+let bgIndex = 0;
+
+/* REVEAL ON SCROLL */
+function reveal() {
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 80) {
+      el.classList.add('active');
+    }
+  });
+}
+
+/* INTERACTIVIDAD FAQ (ACORDEÓN) */
+document.querySelectorAll('.faq-question').forEach(item => {
+  item.addEventListener('click', () => {
+    const parent = item.parentElement;
+    parent.classList.toggle('active');
+  });
+});
+
+/* EVENTOS SCROLL SINCRO */
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  
+  // Progress Bar
+  const progress = (scrollTop / docHeight) * 100;
+  scrollLine.style.width = progress + "%";
+
+  // Control de Fondo
+  const currentBgIndex = Math.floor(scrollTop / 800) % bgImages.length;
+  if (currentBgIndex !== bgIndex) {
+    bg.style.backgroundImage = `url(${bgImages[currentBgIndex]})`;
+    bgIndex = currentBgIndex;
+  }
+  bg.style.transform = `translateY(${scrollTop * 0.12}px) scale(1.05)`;
+
+  // Hero Parallax
+  if (scrollTop < window.innerHeight) {
+    heroContent.style.transform = `translateY(${scrollTop * 0.35}px)`;
+  }
+
+  // Scanner Line
+  scanner.style.top = (scrollTop * 0.4 % window.innerHeight) + "px";
+
+  // Ondas de scroll sutiles
+  if (scrollTop % 350 < 10) {
+    const wave = document.createElement("div");
+    wave.className = "wave";
+    wave.style.left = (window.innerWidth / 2) + "px";
+    wave.style.top = (window.innerHeight / 2) + "px";
+    document.body.appendChild(wave);
+    setTimeout(() => wave.remove(), 1000);
+  }
+
+  // Efecto Galería Portafolio
+  const rect = tattooSection.getBoundingClientRect();
+  const sectionHeight = tattooSection.offsetHeight - window.innerHeight;
+  const tattooProgress = Math.min(Math.max((-rect.top / sectionHeight), 0), 1);
+  const totalImages = tattooImages.length;
+  const switchRange = 0.80; 
+  
+  if (tattooProgress <= switchRange) {
+    const activeIndex = Math.min(
+      Math.floor((tattooProgress / switchRange) * totalImages),
+      totalImages - 1
+    );
+
+    tattooImages.forEach((img, idx) => {
+      if (idx === activeIndex) {
+        img.classList.add("active-work");
+      } else {
+        img.classList.remove("active-work");
+      }
+      img.style.opacity = idx === activeIndex ? 1 : 0;
+      img.style.transform = "scale(1) rotate(0deg) translateY(0px)";
+      img.style.filter = "blur(0px) brightness(1) saturate(1)";
+    });
+
+    if(portfolioTexts[currentLang][activeIndex]) {
+      tattooDescription.innerText = portfolioTexts[currentLang][activeIndex];
+    }
+    smoke.style.opacity = 0;
+
+  } else {
+    // Disolución de salida
+    const dissolveProgress = (tattooProgress - switchRange) / (1 - switchRange);
+    tattooImages.forEach((img) => {
+      if (img.classList.contains("active-work")) {
+        img.style.opacity = 1 - dissolveProgress * 1.2;
+        img.style.transform = `scale(${1 + dissolveProgress * 0.1}) rotate(${dissolveProgress * 5}deg) translateY(${dissolveProgress * -50}px)`;
+        img.style.filter = `blur(${dissolveProgress * 10}px) brightness(${1 - dissolveProgress * 0.3})`;
+      } else {
+        img.style.opacity = 0;
+      }
+    });
+    smoke.style.opacity = dissolveProgress * 1.2;
+  }
+
+  reveal();
+});
+
+/* EFECTOS DINÁMICOS MOUSE CARDS 3D */
+cards.forEach(card => {
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const pctX = (x / rect.width) * 100;
+    const pctY = (y / rect.height) * 100;
+    card.style.setProperty('--x', pctX + '%');
+    card.style.setProperty('--y', pctY + '%');
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / 12;
+    const rotateY = (centerX - x) / 12;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02) translateY(-4px)`;
+    card.style.boxShadow = `0 30px 60px rgba(124,58,237,0.25)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "";
+    card.style.boxShadow = "";
+  });
+});
+
+/* BOTONES ULTRA MAGNÉTICOS */
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("mousemove", (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scale(1.04)`;
+  });
+  btn.addEventListener("mouseleave", () => {
+    btn.style.transform = "";
+  });
+});
+
+/* CANVAS LIQUIDO DE PARTICULAS */
+const canvas = document.getElementById("inkCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const particles = [];
+
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 4 + 1;
+    this.speedX = Math.random() * 1.2 - 0.6;
+    this.speedY = Math.random() * 1.2 - 0.6;
+    this.opacity = 0.7;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.opacity -= 0.01;
+  }
+  draw() {
+    ctx.fillStyle = `rgba(124,58,237,${this.opacity})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].opacity <= 0) {
+      particles.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+document.addEventListener("mousemove", (e) => {
+  ambient.style.transform = `translate(${e.clientX - 350}px, ${e.clientY - 350}px)`;
+  if(Math.random() > 0.6) {
+    particles.push(new Particle(e.clientX, e.clientY));
+  }
+});
+
+
+/* EXPLOSIONES DE TINTA AMBIENTALES */
+function createExplosion() {
+  const explosion = document.createElement("div");
+  explosion.style.position = "fixed";
+  explosion.style.width = "6px";
+  explosion.style.height = "6px";
+  explosion.style.borderRadius = "50%";
+  explosion.style.background = "#7c3aed";
+  explosion.style.left = Math.random() * window.innerWidth + "px";
+  explosion.style.top = Math.random() * window.innerHeight + "px";
+  explosion.style.pointerEvents = "none";
+  explosion.style.boxShadow = "0 0 25px #7c3aed";
+  explosion.style.zIndex = "999";
+  explosion.style.opacity = "0.5";
+
+  explosion.animate([
+    { transform: "scale(0)", opacity: 0.5 },
+    { transform: "scale(10)", opacity: 0 }
+  ], { duration: 1600, easing: "ease-out" });
+
+  document.body.appendChild(explosion);
+  setTimeout(() => explosion.remove(), 1600);
+}
+setInterval(createExplosion, 5000); 
+
+/* INTERSECTION OBSERVER */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.animate([
+        { opacity: 0, transform: "translateY(40px) scale(0.95)" },
+        { opacity: 1, transform: "translateY(0) scale(1)" }
+      ], { duration: 800, easing: "cubic-bezier(.2,.9,.2,1)", fill: "forwards" });
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+cards.forEach(card => observer.observe(card));
+document.querySelectorAll('.safety-card, .faq-item, .timeline-item').forEach(el => observer.observe(el));
+
+window.addEventListener("load", () => {
+  reveal();
+  bg.style.backgroundImage = `url(${bgImages[0]})`;
+});
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+
+</script>
+</body>
+</html>
